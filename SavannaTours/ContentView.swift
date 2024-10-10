@@ -40,13 +40,28 @@ struct ContentView: View {
                     GeometryReader { geometry in
                         Image("thumb")
                             .clipShape(
-                                RoundedRectangle(cornerRadius: 500))
+                                // keeps circle around image
+//                                RoundedRectangle(cornerRadius: 500))
+                                
+                                // adds square
+                                RoundedRectangle(cornerRadius: zoomed ? 40 : 500))
                             .overlay(
                                 Circle()
-                                    .fill(Color.white.opacity(0.4))
+                                // this keeps circle on zommed out
+//                                    .fill(Color.white.opacity(0.4))
+                                
+                                // this removes on zoomed out
+                                    .fill(zoomed ? Color.clear : Color(white: 1, opacity: 0.4))
                                     .scaleEffect(0.8)
                             )
-                            .saturation(0)
+                        // keeps saturation consistent
+//                            .saturation(0)
+                        
+                        // adjusts
+                            .saturation(zoomed ? 1 : 0)
+                        
+                        // adds spin effect
+                            .rotationEffect(zoomed ? .zero: Angle(radians: 6 * .pi))
                         
                         // changes position of image as it zooms out
                             .position(x: zoomed ? geometry.frame(in: .local).midX : 600, y: 50)
